@@ -5,8 +5,14 @@ const getTodoListfromLocal = () => {
   return JSON.parse(localStorage.getItem("addTodoListValue"));
 };
 
-//Adding add to list dyanamically
+//Adding add to list dyanamically\
 
+
+ const addTodoListLocalStorage = () =>{
+  localStorage.setItem("addTodoListValue",JSON.stringify(localTodoLists));
+
+ }
+  
 const addToDynamicElement = (currEle) => {
   const divElement = document.createElement("div"); // create div tag
   divElement.classList.add("main-todo-div"); // insert class name in div
@@ -53,20 +59,24 @@ showTodoList();
 const removeTodoEle = (e) => {
   const todoToRemove = e.target;
   let todoListContent = todoToRemove.previousElementSibling.innerHTML;
+  let parentElem = todoToRemove.parentElement;
   // console.log(todoListContent);
 
   localTodoLists = localTodoLists.filter((curTodo) => {
     console.log(curTodo);
 
     return curTodo !== todoListContent; 
-  })
-  console.log(localTodoLists);
+  });
+  addTodoListLocalStorage(localTodoLists);
+  parentElem.remove();
 }
 
 mainTodoEle.addEventListener("click",(e) => {
   e.preventDefault();
-  removeTodoEle(e);
-})
+  if(e.target.classList.contains("deleteBtn")){
+    removeTodoEle(e);
+  }
+});
 
 document.querySelector(".btn").addEventListener("click", (e) => {
   addTodoList(e);
