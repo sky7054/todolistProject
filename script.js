@@ -10,7 +10,7 @@ const getTodoListfromLocal = () => {
 const addToDynamicElement = (currEle) => {
   const divElement = document.createElement("div"); // create div tag
   divElement.classList.add("main-todo-div"); // insert class name in div
-  divElement.innerHTML = ` <li>${currEle}</li> <button class="deleteBtn">Delete</button>`;
+  divElement.innerHTML = `<li>${currEle.toLowerCase()}</li> <button class="deleteBtn">Delete</button>`;
   mainTodoEle.append(divElement);
 };
 
@@ -48,6 +48,25 @@ const showTodoList = () => {
 };
 
 showTodoList();
+
+//remove element from local storage
+const removeTodoEle = (e) => {
+  const todoToRemove = e.target;
+  let todoListContent = todoToRemove.previousElementSibling.innerHTML;
+  // console.log(todoListContent);
+
+  localTodoLists = localTodoLists.filter((curTodo) => {
+    console.log(curTodo);
+
+    return curTodo !== todoListContent; 
+  })
+  console.log(localTodoLists);
+}
+
+mainTodoEle.addEventListener("click",(e) => {
+  e.preventDefault();
+  removeTodoEle(e);
+})
 
 document.querySelector(".btn").addEventListener("click", (e) => {
   addTodoList(e);
